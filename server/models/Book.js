@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const BookPartSchema = require("./BookPart");
+const BookPartSchema = require('./BookPart');
 
 const BookSchema = new mongoose.Schema({
     title: {

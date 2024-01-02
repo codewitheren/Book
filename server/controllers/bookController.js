@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Book = require("../models/Book");
-const BookPart = require("../models/BookPart");
+const BookPartSchema = require("../models/BookPart");
 
 exports.getAllBooks = async (req, res) => {
     try {
@@ -30,14 +30,18 @@ exports.createBook = async (req, res) => {
         const allText = req.body.text.split(" ");
 
         const bookParts = [];
-        const dividedText = [];
-
-        for(let i = 0; i < allText.length; i++){
-            for(let j = 0; j < 2000; j++){
-                dividedText.push(text[j]);
+        var dividedText = [];
+        const BookPart = mongoose.model("BookPart", BookPartSchema);
+        var index = 0;
+        for(let i = 0; i < allText.length; i){
+            for(let j = 0; j < 5; j++){
+                if(allText[i] == undefined || allText[i] == null)
+                    break;
+                dividedText.push(allText[i]);
+                i++;
             }
             bookParts.push(new BookPart({
-                partNumber: i,
+                partNumber: index++, 
                 content: dividedText,
             }));
             dividedText = [];
@@ -68,29 +72,35 @@ exports.updateBook = async (req, res) => {
         const allText = req.body.text.split(" ");
 
         const bookParts = [];
-        const dividedText = [];
+        var dividedText = [];
+        const BookPart = mongoose.model("BookPart", BookPartSchema);
+        var index = 0;
 
-        for(let i = 0; i < allText.length; i++){
-            for(let j = 0; j < 2000; j++){
-                dividedText.push(text[j]);
+        for(let i = 0; i < allText.length; i){
+            for(let j = 0; j < 5; j++){
+                if(allText[i] == undefined || allText[i] == null)
+                    break;
+                dividedText.push(allText[i]);
+                i++;
             }
             bookParts.push(new BookPart({
-                partNumber: i,
+                partNumber: index++, 
                 content: dividedText,
             }));
             dividedText = [];
         }
+
         const updatedBook = await Book.findByIdAndUpdate({
             _id: req.params.id,
-        }, {
+        },{
             title,
             description,
             thumbnail,
             parts: bookParts,
         }, {
             new: true,
-            runValidators: true,
-        })
+        });
+        
         if (!updatedBook) {
             return res.status(404).json({ error: "Book not found" });
         }

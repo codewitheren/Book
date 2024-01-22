@@ -1,7 +1,6 @@
 # ReadFaster - Hızlı Kitap Okuma Uygulaması
 
-![ReadFaster](https://i.hizliresim.com/4uzbo95.png)
-![ReadFaster](https://i.hizliresim.com/s5rejv2.png)
+<img src="https://i.hizliresim.com/4uzbo95.png" alt="ReadFaster" width="200"> <img src="https://i.hizliresim.com/s5rejv2.png" alt="ReadFaster" width="200">
 
 Bu proje, hızlı kitap okumaya yardımcı olmak amacıyla geliştirilmiş bir MERN (MongoDB, Express.js, React.js, Node.js) yığını uygulamasıdır.
 

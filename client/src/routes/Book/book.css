@@ -1,0 +1,104 @@
+.book-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: auto;
+    margin-top: 100px;
+    height: 500px;
+}
+
+.words{
+    display: flex;
+    font-size: 3em;
+    text-align: center;
+    user-select: none;
+    height: 40%
+}
+
+.prev-word{
+    opacity: 0.05;
+    width: 100%;
+    border: 000.1px solid #fab81300;
+}
+
+.next-word{
+    opacity: 0.05;
+    width: 100%;
+    border: 000.1px solid #fab81300;
+}
+
+.highlight {
+    color: #FAB713;
+}
+
+.finished{
+    color: #4CAF50;
+}
+
+.buttons{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-top: 100px;
+    user-select: none;
+}
+
+.buttons button{
+    width: 100px;
+    height: 40px;
+    border: none;
+    background-color: #FAB713;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+}
+
+.buttons a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+    border: none;
+    background-color: #FAB713;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+    text-decoration: none;
+}
+
+
+
+.buttons button:hover, .buttons a:hover{
+    opacity: 0.8;
+}
+
+@media screen and (max-width: 768px) {
+    .book-content{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+        height: 40vh;
+        margin: auto;
+        margin-top: 100px;
+    }
+
+    .buttons button{
+        margin-top: 70px;
+        width: 45%;
+    }
+
+    .buttons a{
+        margin-top: 70px;
+        width: 45%;
+    }
+}

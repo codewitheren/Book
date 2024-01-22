@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Book = require("../models/Book");
 const BookPartSchema = require("../models/BookPart");
+const { parse } = require("dotenv");
 
 exports.getAllBooks = async (req, res) => {
     try {
@@ -14,6 +15,8 @@ exports.getAllBooks = async (req, res) => {
 
 exports.getOneBook = async (req, res) => {
     try {
+        if (!mongoose.Types.ObjectId.isValid(req.params.id))
+            return res.status(400).json({ error: "Invalid ObjectId" });
         const book = await Book.findById(req.params.id);
         res.json(book);
     } catch (error) {
@@ -31,13 +34,22 @@ exports.createBook = async (req, res) => {
 
         const bookParts = [];
         var dividedText = [];
-        const BookPart = mongoose.model("BookPart", BookPartSchema);
         var index = 0;
+        const BookPart = mongoose.model("BookPart", BookPartSchema);
+
+        punctuationControl = (word) => {
+            if (word != "\n" && word != "." && word != "," && word != "!" && word != "?" && word != ":" && word != ";" && word != "-" && word != "(" && word != ")" && word != "[" && word != "]" && word != "{" && word != "}" && word != "'" && word != '"' && word != "«" && word != "»" && word != "..." && word != "—" && word != "–" && word != "…" && word != "’" && word != "‘" && word != "“" && word != "”" && word != "„")
+                return true;
+            else
+                return false;
+        };
+
         for(let i = 0; i < allText.length; i){
-            for(let j = 0; j < 5; j++){
+            for(let j = 0; j < 5000; j++){
                 if(allText[i] == undefined || allText[i] == null)
                     break;
-                dividedText.push(allText[i]);
+                if(allText[i].length >=1 && punctuationControl(allText[i]))
+                    dividedText.push(allText[i]);
                 i++;
             }
             bookParts.push(new BookPart({
@@ -123,6 +135,24 @@ exports.deleteBook = async (req, res) => {
         }
 
         res.json(deletedBook);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+exports.getBookParts = async (req, res) => {
+    try {
+        if (!mongoose.Types.ObjectId.isValid(req.params.id))
+            return res.status(400).json({ error: "Invalid ObjectId" });
+        const book = await Book.findById(req.params.id);
+        const partNumber = parseInt(req.params.partNumber);
+        if (partNumber >= book.parts.length || partNumber < 0)
+            return res.status(400).json({ error: "Invalid part number" });
+        if (book.parts[partNumber] != undefined || book.parts[partNumber] != null)
+            return res.json(book.parts[partNumber]);
+        else
+            return res.status(400).json({ error: "Invalid part number" });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: error.message });

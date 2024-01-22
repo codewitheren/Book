@@ -1,0 +1,14 @@
+header {
+    padding: 10px 0px 10px 0px;
+    width: 80%;
+    margin: auto;
+    user-select: none;
+}
+
+  @media screen and (max-width: 768px) {
+    .logo {
+        display: block;
+        margin: auto;
+    }
+  }
+  
